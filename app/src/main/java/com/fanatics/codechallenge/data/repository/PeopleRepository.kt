@@ -12,5 +12,5 @@ internal class PeopleRepository @Inject constructor(
     private val localPeopleDataSource: LocalPeopleDataSource,
     private val memoryPeopleDataSource: MemoryPeopleDataSource,
 ) {
-    
+
 }
