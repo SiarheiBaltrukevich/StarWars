@@ -1,7 +1,7 @@
 package com.fanatics.codechallenge.data.model
 
 data class Person(
-    val uuid: Long,
+    val id: Long,
     val name: String,
     val height: Double,
     val mass: Double,
