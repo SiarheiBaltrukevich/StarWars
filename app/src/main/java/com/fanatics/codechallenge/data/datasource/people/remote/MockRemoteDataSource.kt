@@ -1,6 +1,7 @@
 package com.fanatics.codechallenge.data.datasource.people.remote
 
-import android.app.Person
+import com.fanatics.codechallenge.data.model.Person
+import com.fanatics.codechallenge.di.annotation.MockData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,9 +11,10 @@ import javax.inject.Inject
 /**
  * An alternative source of remote data source, since the main is not working.
  */
+@MockData
 internal class MockRemoteDataSource @Inject constructor() : RemotePeopleDataSource {
 
-    private val _dataFlow: MutableStateFlow<List<Person>> = MutableStateFlow(emptyList())
+    private val _dataFlow: MutableStateFlow<List<Person>> = MutableStateFlow(generatePeople())
     override val dataFlow: Flow<List<Person>> get() = _dataFlow.asStateFlow()
 
     override fun refresh() {
@@ -20,6 +22,35 @@ internal class MockRemoteDataSource @Inject constructor() : RemotePeopleDataSour
     }
 
     private fun generatePeople(): List<Person> {
-        return emptyList()
+        return listOf(
+            Person(
+                id = 4,
+                name = "Niall",
+                height = 1.75,
+                mass = 76.5,
+                description = "some clever person"
+            ),
+            Person(
+                id = 3,
+                name = "Jack",
+                height = 1.65,
+                mass = 76.5,
+                description = "some interesting person"
+            ),
+            Person(
+                id = 2,
+                name = "Lucia",
+                height = 1.72,
+                mass = 66.5,
+                description = "some beauty person"
+            ),
+            Person(
+                id = 1,
+                name = "Paul",
+                height = 1.85,
+                mass = 86.5,
+                description = "some tall person"
+            ),
+        )
     }
 }

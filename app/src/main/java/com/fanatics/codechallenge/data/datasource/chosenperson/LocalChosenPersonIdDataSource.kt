@@ -14,7 +14,7 @@ import javax.inject.Inject
 internal class LocalChosenPersonIdDataSource @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
-    val personFlow: Flow<Long?> = dataStore.data.map { preferences ->
+    val dataFlow: Flow<Long?> = dataStore.data.map { preferences ->
         preferences[KEY_CHOSEN_PERSON_ID]?.toLongOrNull()
     }
 

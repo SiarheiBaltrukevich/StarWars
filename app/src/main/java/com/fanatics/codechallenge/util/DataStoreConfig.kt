@@ -1,4 +1,4 @@
-package com.fanatics.codechallenge.config
+package com.fanatics.codechallenge.util
 
 import android.content.Context
 import androidx.datastore.core.DataStore
