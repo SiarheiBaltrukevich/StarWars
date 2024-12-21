@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * keep the last chosen person id locally.
  */
-internal class LocalChosenPersonIdDataSource @Inject constructor(
+class LocalChosenPersonIdDataSource @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
     val dataFlow: Flow<Long?> = dataStore.data.map { preferences ->

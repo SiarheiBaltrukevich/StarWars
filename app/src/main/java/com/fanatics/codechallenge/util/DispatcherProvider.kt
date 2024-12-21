@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
-internal class DispatcherProvider @Inject constructor() {
+class DispatcherProvider @Inject constructor() {
     val main: CoroutineDispatcher
         get() = Dispatchers.Main
     val mainImmediate: CoroutineDispatcher

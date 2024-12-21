@@ -18,7 +18,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class PeopleRepository @Inject constructor(
+class PeopleRepository @Inject constructor(
     @MockData private val remotePeopleDataSource: RemotePeopleDataSource,
     private val localChosenPersonIdDataSource: LocalChosenPersonIdDataSource,
     private val dispatcherProvider: DispatcherProvider,
@@ -53,7 +53,7 @@ internal class PeopleRepository @Inject constructor(
         }
     }
 
-    private fun refreshPeople() {
+    fun refreshPeople() {
        remotePeopleDataSource.refresh()
     }
 }

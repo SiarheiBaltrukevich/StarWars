@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CodeChallenge</string>
+
+    <!-- Home screen -->
+    <string name="home_header">People</string>
+    <string name="no_people_exception">There is no people to show.\n Try to refresh.</string>
 </resources>

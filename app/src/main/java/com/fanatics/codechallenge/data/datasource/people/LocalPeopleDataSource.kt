@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * Keeps people data locally to load them as fast as it possible on the app's start up.
  */
-internal class LocalPeopleDataSource @Inject constructor() {
+class LocalPeopleDataSource @Inject constructor() {
 
     private val _dataFlow: MutableStateFlow<List<Person>> = MutableStateFlow(emptyList())
     val dataFlow: Flow<List<Person>> get() = _dataFlow

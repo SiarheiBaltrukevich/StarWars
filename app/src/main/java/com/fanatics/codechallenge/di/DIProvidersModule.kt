@@ -1,6 +1,7 @@
 package com.fanatics.codechallenge.di
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.apollographql.apollo.ApolloClient
@@ -18,7 +19,12 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DIModule {
+object DIProvidersModule {
+
+    @Provides
+    fun provideResources(@ApplicationContext context: Context): Resources {
+        return context.resources
+    }
 
     @Provides
     fun providesCoroutineScope(): CoroutineScope =
