@@ -1,22 +1,24 @@
 package com.fanatics.codechallenge.ui.screen.home.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.fanatics.codechallenge.R
 import com.fanatics.codechallenge.ui.screen.home.HomeUIState
 import com.fanatics.codechallenge.ui.screen.home.UIAction
+import com.fanatics.codechallenge.ui.theme.SWTheme
 import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 
 @Composable
@@ -29,9 +31,11 @@ fun BoxScope.ErrorHomeScreen(
     Column(
         modifier = Modifier.align(Alignment.Center),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(SWTheme.dimens.padding.p16)
     ) {
         Text(
+            textAlign = TextAlign.Center,
+            style = SWTheme.typography.home.info,
             text = state.message
         )
         Button(
@@ -39,7 +43,7 @@ fun BoxScope.ErrorHomeScreen(
             onClick = onRefreshAction
         ) {
             Text(
-                text = "refresh"
+                text = stringResource(R.string.button_refresh)
             )
         }
     }
@@ -50,10 +54,12 @@ fun BoxScope.ErrorHomeScreen(
 private fun ErrorHomeScreenPreview() {
     StarWarsAppTheme {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .background(SWTheme.colors.home.gradientBackground)
+                .fillMaxSize()
         ) {
             ErrorHomeScreen(
-                state = HomeUIState.Error("some message")
+                state = HomeUIState.Error(stringResource(R.string.no_people_exception))
             ) { }
         }
     }

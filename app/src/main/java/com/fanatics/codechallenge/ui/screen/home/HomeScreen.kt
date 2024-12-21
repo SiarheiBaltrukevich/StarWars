@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fanatics.codechallenge.R
 import com.fanatics.codechallenge.ui.screen.home.components.ErrorHomeScreen
@@ -56,15 +56,13 @@ private fun BaseHomeComponent(
     content: @Composable BoxScope.() -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(SWTheme.colors.home.gradientBackground)
     ) {
-        Header()
+        Header(modifier = Modifier.systemBarsPadding())
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(SWTheme.colors.home.gradientBackground)
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
             content()
         }
     }
@@ -75,18 +73,16 @@ private fun Header(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(SWTheme.colors.home.header.background)
+        modifier = modifier.fillMaxWidth()
     ) {
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .height(SWTheme.dimens.home.headerHeight)
+                .height(SWTheme.dimens.home.header.height)
         ) {
             Text(
                 modifier = Modifier
-                    .padding(horizontal = 24.dp)
+                    .padding(horizontal = SWTheme.dimens.padding.p24)
                     .align(Alignment.CenterStart),
                 text = stringResource(R.string.home_header),
                 style = SWTheme.typography.home.header.main
@@ -94,7 +90,7 @@ private fun Header(
         }
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),
-            thickness = 1.dp,
+            thickness = SWTheme.dimens.divider.small,
             color = SWTheme.colors.home.header.divider
         )
     }
