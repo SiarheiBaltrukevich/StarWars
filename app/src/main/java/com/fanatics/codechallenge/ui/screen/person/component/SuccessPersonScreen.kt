@@ -17,6 +17,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import com.fanatics.codechallenge.R
 import com.fanatics.codechallenge.data.model.Person
@@ -36,12 +42,11 @@ fun SuccessPersonScreen(
         Text(
             modifier = Modifier
                 .padding(SWTheme.dimens.padding.p24)
-                .align(Alignment.TopStart)
-                .clickable {
-                    isDetailsVisible = !isDetailsVisible
-                },
+                .align(Alignment.TopStart),
             style = SWTheme.typography.person.info,
-            text = stringResource(R.string.person_text_with_link, state.person.name),
+            text = AnnotatedText(state.person.name) {
+                isDetailsVisible = !isDetailsVisible
+            },
         )
 
         if (isDetailsVisible) DetailsDialog(
@@ -52,6 +57,23 @@ fun SuccessPersonScreen(
             person = state.person,
         )
     }
+}
+
+@Composable
+private fun AnnotatedText(
+    name: String,
+    onAction: () -> Unit
+): AnnotatedString = buildAnnotatedString {
+    append(stringResource(R.string.person_text_with_link_1))
+    val link =
+        LinkAnnotation.Url(
+            "",
+            TextLinkStyles(SpanStyle(color = SWTheme.colors.person.link))
+        ) {
+            onAction()
+        }
+    withLink(link) { append(stringResource(R.string.person_text_with_link_2)) }
+    append(stringResource(R.string.person_text_with_link_3, name))
 }
 
 @Composable

@@ -12,8 +12,10 @@
     <string name="person_header">People</string>
     <string name="person_loading">Loading details...</string>
     <string name="no_person_exception">Can\'t find the person.</string>
-    <string name="person_text_with_link">Click here to view homeworld data for %1$s</string>
     <string name="person_homeworld">Homeworld: %1$s</string>
+    <string name="person_text_with_link_1">Click&#160;</string>
+    <string name="person_text_with_link_2">here</string>
+    <string name="person_text_with_link_3">&#160;to view homeworld data for %1$s</string>
 
     <!-- Buttons -->
     <string name="button_refresh">Refresh</string>
