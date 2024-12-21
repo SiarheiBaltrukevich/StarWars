@@ -24,7 +24,7 @@ internal data class HomeDimens(
 @Immutable
 internal data class PersonDimens(
     val header: HeaderDimens = HeaderDimens(height = 72.dp),
-    val dialogFraction: Float = 0.3f,
+    val dialogFraction: Float = 0.4f,
     val dialogShape: Shape = RoundedCornerShape(
         topStart = 16.dp,
         topEnd = 16.dp,

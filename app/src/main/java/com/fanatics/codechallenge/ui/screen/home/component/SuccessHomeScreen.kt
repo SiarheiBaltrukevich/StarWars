@@ -2,6 +2,7 @@ package com.fanatics.codechallenge.ui.screen.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,7 +41,15 @@ fun SuccessHomeScreen(
         ) { index, person ->
             Column {
                 PersonItemComponent(
-                    modifier = Modifier.clickable { onPersonClick(person.id) },
+                    modifier = Modifier
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = {
+                                onPersonClick(person.id)
+                                TODO("navigate to person details")
+                            }
+                        ),
                     person = person
                 )
                 if (state.people.lastIndex != index) {
