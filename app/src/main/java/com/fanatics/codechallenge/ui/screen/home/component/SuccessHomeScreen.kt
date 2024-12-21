@@ -1,4 +1,4 @@
-package com.fanatics.codechallenge.ui.screen.home.components
+package com.fanatics.codechallenge.ui.screen.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -62,7 +62,7 @@ private fun SuccessHomeScreenPreview() {
     StarWarsAppTheme {
         Box(
             modifier = Modifier
-                .background(SWTheme.colors.home.gradientBackground)
+                .background(SWTheme.colors.common.gradientBackground)
                 .fillMaxSize()
         ) {
             SuccessHomeScreen(
@@ -73,28 +73,28 @@ private fun SuccessHomeScreenPreview() {
                             name = "Niall",
                             height = 1.75,
                             mass = 76.5,
-                            description = "some clever person"
+                            homeworld = "homeworld 1"
                         ),
                         Person(
                             id = 3,
                             name = "Jack",
                             height = 1.65,
                             mass = 76.5,
-                            description = "some interesting person"
+                            homeworld = "homeworld 2"
                         ),
                         Person(
                             id = 2,
                             name = "Lucia",
                             height = 1.72,
                             mass = 66.5,
-                            description = "some beauty person"
+                            homeworld = "homeworld 3"
                         ),
                         Person(
                             id = 1,
                             name = "Paul",
                             height = 1.85,
                             mass = 86.5,
-                            description = "some tall person"
+                            homeworld = "homeworld 4"
                         ),
                     )
                 )

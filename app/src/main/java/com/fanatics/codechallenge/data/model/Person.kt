@@ -8,5 +8,5 @@ data class Person(
     val name: String,
     val height: Double,
     val mass: Double,
-    val description: String,
+    val homeworld: String,
 )

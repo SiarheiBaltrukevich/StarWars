@@ -8,6 +8,14 @@
     <string name="person_item_height">Height: %1$s</string>
     <string name="person_item_mass">Mass: %1$s</string>
 
+    <!-- Person screen -->
+    <string name="person_header">People</string>
+    <string name="person_loading">Loading details...</string>
+    <string name="no_person_exception">Can\'t find the person.</string>
+    <string name="person_text_with_link">Click here to view homeworld data for %1$s</string>
+    <string name="person_homeworld">Homeworld: %1$s</string>
+
     <!-- Buttons -->
     <string name="button_refresh">Refresh</string>
+    <string name="button_back_to_home">Back to Home</string>
 </resources>

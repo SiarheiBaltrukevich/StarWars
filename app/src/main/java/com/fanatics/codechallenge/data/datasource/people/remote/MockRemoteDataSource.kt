@@ -28,28 +28,28 @@ internal class MockRemoteDataSource @Inject constructor() : RemotePeopleDataSour
                 name = "Niall",
                 height = 1.75,
                 mass = 76.5,
-                description = "some clever person"
+                homeworld = "homeworld 1"
             ),
             Person(
                 id = 3,
                 name = "Jack",
                 height = 1.65,
                 mass = 76.5,
-                description = "some interesting person"
+                homeworld = "homeworld 2"
             ),
             Person(
                 id = 2,
                 name = "Lucia",
                 height = 1.72,
                 mass = 66.5,
-                description = "some beauty person"
+                homeworld = "homeworld 3"
             ),
             Person(
                 id = 1,
                 name = "Paul",
                 height = 1.85,
                 mass = 86.5,
-                description = "some tall person"
+                homeworld = "homeworld 4"
             ),
         )
     }

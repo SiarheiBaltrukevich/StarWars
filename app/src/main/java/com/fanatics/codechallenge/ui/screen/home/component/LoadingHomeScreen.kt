@@ -1,4 +1,4 @@
-package com.fanatics.codechallenge.ui.screen.home.components
+package com.fanatics.codechallenge.ui.screen.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -31,7 +31,7 @@ private fun LoadingHomeScreenPreview() {
     StarWarsAppTheme {
         Box(
             modifier = Modifier
-                .background(SWTheme.colors.home.gradientBackground)
+                .background(SWTheme.colors.common.gradientBackground)
                 .fillMaxSize()
         ) {
             LoadingHomeScreen()

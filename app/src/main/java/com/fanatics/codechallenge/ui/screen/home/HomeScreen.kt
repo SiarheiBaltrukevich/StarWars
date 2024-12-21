@@ -21,9 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fanatics.codechallenge.R
-import com.fanatics.codechallenge.ui.screen.home.components.ErrorHomeScreen
-import com.fanatics.codechallenge.ui.screen.home.components.LoadingHomeScreen
-import com.fanatics.codechallenge.ui.screen.home.components.SuccessHomeScreen
+import com.fanatics.codechallenge.ui.screen.home.component.ErrorHomeScreen
+import com.fanatics.codechallenge.ui.screen.home.component.LoadingHomeScreen
+import com.fanatics.codechallenge.ui.screen.home.component.SuccessHomeScreen
 import com.fanatics.codechallenge.ui.theme.SWTheme
 import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 
@@ -58,7 +58,7 @@ private fun BaseHomeComponent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(SWTheme.colors.home.gradientBackground)
+            .background(SWTheme.colors.common.gradientBackground)
     ) {
         Header(modifier = Modifier.systemBarsPadding())
 

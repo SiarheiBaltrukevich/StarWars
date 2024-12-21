@@ -1,4 +1,4 @@
-package com.fanatics.codechallenge.ui.screen.home.components
+package com.fanatics.codechallenge.ui.screen.person.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,17 +16,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.fanatics.codechallenge.R
-import com.fanatics.codechallenge.ui.screen.home.HomeUIState
-import com.fanatics.codechallenge.ui.screen.home.UIAction
+import com.fanatics.codechallenge.ui.screen.person.PersonUIState
+import com.fanatics.codechallenge.ui.screen.person.UIAction
 import com.fanatics.codechallenge.ui.theme.SWTheme
 import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 
 @Composable
-fun BoxScope.ErrorHomeScreen(
-    state: HomeUIState.Error,
+fun BoxScope.ErrorPersonScreen(
+    state: PersonUIState.Error,
     onAction: (UIAction) -> Unit
 ) {
-    val onRefreshAction = remember { { onAction(UIAction.RefreshPeople) } }
+    val onBackAction = remember { { onAction(UIAction.BackToHome) } }
 
     Column(
         modifier = Modifier.align(Alignment.Center),
@@ -40,10 +40,10 @@ fun BoxScope.ErrorHomeScreen(
         )
         Button(
             modifier = Modifier,
-            onClick = onRefreshAction
+            onClick = onBackAction
         ) {
             Text(
-                text = stringResource(R.string.button_refresh)
+                text = stringResource(R.string.button_back_to_home)
             )
         }
     }
@@ -51,15 +51,15 @@ fun BoxScope.ErrorHomeScreen(
 
 @Preview
 @Composable
-private fun ErrorHomeScreenPreview() {
+private fun ErrorPersonScreenPreview() {
     StarWarsAppTheme {
         Box(
             modifier = Modifier
-                .background(SWTheme.colors.home.gradientBackground)
+                .background(SWTheme.colors.common.gradientBackground)
                 .fillMaxSize()
         ) {
-            ErrorHomeScreen(
-                state = HomeUIState.Error(stringResource(R.string.no_people_exception))
+            ErrorPersonScreen(
+                state = PersonUIState.Error(stringResource(R.string.no_person_exception))
             ) { }
         }
     }

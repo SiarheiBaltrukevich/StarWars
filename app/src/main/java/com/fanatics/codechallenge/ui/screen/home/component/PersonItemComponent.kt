@@ -1,4 +1,4 @@
-package com.fanatics.codechallenge.ui.screen.home.components
+package com.fanatics.codechallenge.ui.screen.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -68,7 +68,7 @@ private fun PersonItemComponentPreview() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(SWTheme.colors.home.gradientBackground)
+                .background(SWTheme.colors.common.gradientBackground)
         ) {
             PersonItemComponent(
                 Person(
@@ -76,7 +76,7 @@ private fun PersonItemComponentPreview() {
                     name = "Niall Smyth",
                     height = 1.75,
                     mass = 76.5,
-                    description = "some clever person"
+                    homeworld = "homeworld 1"
                 ),
             )
         }

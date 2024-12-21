@@ -1,6 +1,8 @@
 package com.fanatics.codechallenge.ui.theme
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -8,6 +10,7 @@ import androidx.compose.ui.unit.dp
 @Immutable
 internal data class StarWarsDimens(
     val home: HomeDimens = HomeDimens(),
+    val person: PersonDimens = PersonDimens(),
     val padding: Paddings = Paddings(),
     val icon: IconSize = IconSize(),
     val divider: DividerSize = DividerSize(),
@@ -15,12 +18,22 @@ internal data class StarWarsDimens(
 
 @Immutable
 internal data class HomeDimens(
-    val header: HeaderDimens = HeaderDimens(),
+    val header: HeaderDimens = HeaderDimens(height = 96.dp),
+)
+
+@Immutable
+internal data class PersonDimens(
+    val header: HeaderDimens = HeaderDimens(height = 72.dp),
+    val dialogFraction: Float = 0.3f,
+    val dialogShape: Shape = RoundedCornerShape(
+        topStart = 16.dp,
+        topEnd = 16.dp,
+    ),
 )
 
 @Immutable
 internal data class HeaderDimens(
-    val height: Dp = 96.dp,
+    val height: Dp,
 )
 
 @Immutable
