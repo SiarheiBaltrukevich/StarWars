@@ -22,29 +22,33 @@ import com.fanatics.codechallenge.ui.theme.SWTheme
 import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 
 @Composable
-fun BoxScope.ErrorHomeScreen(
+fun ErrorHomeScreen(
     state: HomeUIState.Error,
-    onAction: (UIAction) -> Unit
+    onAction: (UIAction) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val onRefreshAction = remember { { onAction(UIAction.RefreshPeople) } }
-
-    Column(
-        modifier = Modifier.align(Alignment.Center),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(SWTheme.dimens.padding.p16)
+    Box(
+        modifier = modifier.fillMaxSize()
     ) {
-        Text(
-            textAlign = TextAlign.Center,
-            style = SWTheme.typography.home.info,
-            text = state.message
-        )
-        Button(
-            modifier = Modifier,
-            onClick = onRefreshAction
+        Column(
+            modifier = Modifier.align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(SWTheme.dimens.padding.p16)
         ) {
             Text(
-                text = stringResource(R.string.button_refresh)
+                textAlign = TextAlign.Center,
+                style = SWTheme.typography.home.info,
+                text = state.message
             )
+            Button(
+                modifier = Modifier,
+                onClick = onRefreshAction
+            ) {
+                Text(
+                    text = stringResource(R.string.button_refresh)
+                )
+            }
         }
     }
 }
@@ -53,14 +57,10 @@ fun BoxScope.ErrorHomeScreen(
 @Composable
 private fun ErrorHomeScreenPreview() {
     StarWarsAppTheme {
-        Box(
-            modifier = Modifier
-                .background(SWTheme.colors.common.gradientBackground)
-                .fillMaxSize()
-        ) {
-            ErrorHomeScreen(
-                state = HomeUIState.Error(stringResource(R.string.no_people_exception))
-            ) { }
-        }
+        ErrorHomeScreen(
+            modifier = Modifier.background(SWTheme.colors.common.gradientBackground),
+            state = HomeUIState.Error(stringResource(R.string.no_people_exception)),
+            onAction = {}
+        )
     }
 }

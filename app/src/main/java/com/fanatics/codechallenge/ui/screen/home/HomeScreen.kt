@@ -2,13 +2,12 @@ package com.fanatics.codechallenge.ui.screen.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,34 +35,25 @@ fun HomeScreen() {
         viewModel.handleUIAction(UIAction.ObservePeople)
     }
 
-    ShowHomeUI(state, viewModel::handleUIAction)
-}
-
-@Composable
-private fun ShowHomeUI(
-    state: HomeUIState,
-    onAction: (UIAction) -> Unit
-) = BaseHomeComponent {
-    when(state) {
-        HomeUIState.Loading -> LoadingHomeScreen()
-        is HomeUIState.Error -> ErrorHomeScreen(state, onAction)
-        is HomeUIState.Success -> SuccessHomeScreen(state, onAction)
-    }
+    BaseHomeComponent(state, viewModel::handleUIAction)
 }
 
 @Composable
 private fun BaseHomeComponent(
-    content: @Composable BoxScope.() -> Unit
+    state: HomeUIState,
+    onAction: (UIAction) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(SWTheme.colors.common.gradientBackground)
     ) {
-        Header(modifier = Modifier.systemBarsPadding())
+        Header(modifier = Modifier.statusBarsPadding())
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            content()
+        when(state) {
+            HomeUIState.Loading -> LoadingHomeScreen()
+            is HomeUIState.Error -> ErrorHomeScreen(state = state, onAction = onAction)
+            is HomeUIState.Success -> SuccessHomeScreen(state = state, onAction = onAction)
         }
     }
 }
@@ -100,8 +90,9 @@ private fun Header(
 @Composable
 private fun BaseHomeComponentPreview() {
     StarWarsAppTheme {
-        BaseHomeComponent {
-            Box(modifier = Modifier.fillMaxSize())
-        }
+        BaseHomeComponent(
+            state = HomeUIState.Loading,
+            onAction = {}
+        )
     }
 }

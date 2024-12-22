@@ -15,26 +15,26 @@ import com.fanatics.codechallenge.ui.theme.SWTheme
 import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 
 @Composable
-fun BoxScope.LoadingHomeScreen(
+fun LoadingHomeScreen(
     modifier: Modifier = Modifier
 ) {
-    Text(
-        modifier = modifier.align(Alignment.Center),
-        style = SWTheme.typography.home.info,
-        text = stringResource(R.string.home_loading),
-    )
+    Box(
+        modifier = modifier.fillMaxSize()
+    ) {
+        Text(
+            modifier = modifier.align(Alignment.Center),
+            style = SWTheme.typography.home.info,
+            text = stringResource(R.string.home_loading),
+        )
+    }
 }
 
 @Preview
 @Composable
 private fun LoadingHomeScreenPreview() {
     StarWarsAppTheme {
-        Box(
-            modifier = Modifier
-                .background(SWTheme.colors.common.gradientBackground)
-                .fillMaxSize()
-        ) {
-            LoadingHomeScreen()
-        }
+        LoadingHomeScreen(
+            modifier = Modifier.background(SWTheme.colors.common.gradientBackground)
+        )
     }
 }

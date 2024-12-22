@@ -25,15 +25,15 @@ import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 @Composable
 fun SuccessHomeScreen(
     state: HomeUIState.Success,
-    onAction: (UIAction) -> Unit
+    onAction: (UIAction) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val lazyListState = rememberLazyListState()
     val onPersonClick = remember { { id: Long -> onAction(UIAction.ChosePerson(id)) } }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         state = lazyListState,
-        horizontalAlignment = Alignment.Start,
     ) {
         itemsIndexed(
             items = state.people,
@@ -69,45 +69,27 @@ fun SuccessHomeScreen(
 @Composable
 private fun SuccessHomeScreenPreview() {
     StarWarsAppTheme {
-        Box(
-            modifier = Modifier
-                .background(SWTheme.colors.common.gradientBackground)
-                .fillMaxSize()
-        ) {
-            SuccessHomeScreen(
-                state = HomeUIState.Success(
-                    people = listOf(
-                        Person(
-                            id = 4,
-                            name = "Niall",
-                            height = 1.75,
-                            mass = 76.5,
-                            homeworld = "homeworld 1"
-                        ),
-                        Person(
-                            id = 3,
-                            name = "Jack",
-                            height = 1.65,
-                            mass = 76.5,
-                            homeworld = "homeworld 2"
-                        ),
-                        Person(
-                            id = 2,
-                            name = "Lucia",
-                            height = 1.72,
-                            mass = 66.5,
-                            homeworld = "homeworld 3"
-                        ),
-                        Person(
-                            id = 1,
-                            name = "Paul",
-                            height = 1.85,
-                            mass = 86.5,
-                            homeworld = "homeworld 4"
-                        ),
-                    )
+        SuccessHomeScreen(
+            modifier = Modifier.background(SWTheme.colors.common.gradientBackground),
+            state = HomeUIState.Success(
+                people = listOf(
+                    Person(
+                        id = 4,
+                        name = "Niall",
+                        height = 1.75,
+                        mass = 76.5,
+                        homeworld = "homeworld 1"
+                    ),
+                    Person(
+                        id = 3,
+                        name = "Jack",
+                        height = 1.65,
+                        mass = 76.5,
+                        homeworld = "homeworld 2"
+                    ),
                 )
-            ) { }
-        }
+            ),
+            onAction = {}
+        )
     }
 }

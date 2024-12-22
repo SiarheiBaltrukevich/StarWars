@@ -1,7 +1,7 @@
 package com.fanatics.codechallenge.data.datasource.people.remote
 
 import com.fanatics.codechallenge.data.model.Person
-import com.fanatics.codechallenge.di.annotation.MockData
+import com.fanatics.codechallenge.di.annotation.MockedData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,8 +11,8 @@ import javax.inject.Inject
 /**
  * An alternative source of remote data source, since the main is not working.
  */
-@MockData
-internal class MockRemoteDataSource @Inject constructor() : RemotePeopleDataSource {
+@MockedData
+internal class MockRemotePeopleDataSource @Inject constructor() : RemotePeopleDataSource {
 
     private val _dataFlow: MutableStateFlow<List<Person>> = MutableStateFlow(generatePeople())
     override val dataFlow: Flow<List<Person>> get() = _dataFlow.asStateFlow()
