@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import com.fanatics.codechallenge.ui.screen.home.HomeScreen
+import com.fanatics.codechallenge.ui.navigation.AppNavigator
 import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,8 +24,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             StarWarsAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) {
-                    HomeScreen()
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+                    AppNavigator()
                 }
             }
         }

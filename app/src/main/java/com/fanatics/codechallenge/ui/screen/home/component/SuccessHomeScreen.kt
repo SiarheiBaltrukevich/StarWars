@@ -13,10 +13,12 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.fanatics.codechallenge.data.model.Person
+import com.fanatics.codechallenge.ui.navigation.AppScreens
 import com.fanatics.codechallenge.ui.screen.home.HomeUIState
 import com.fanatics.codechallenge.ui.screen.home.UIAction
 import com.fanatics.codechallenge.ui.theme.SWTheme
@@ -25,6 +27,7 @@ import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 @Composable
 fun SuccessHomeScreen(
     state: HomeUIState.Success,
+    navController: NavController,
     onAction: (UIAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -47,7 +50,7 @@ fun SuccessHomeScreen(
                             indication = null,
                             onClick = {
                                 onPersonClick(person.id)
-                                TODO("navigate to person details")
+                                navController.navigate(route = AppScreens.Person.name)
                             }
                         ),
                     person = person
@@ -89,6 +92,7 @@ private fun SuccessHomeScreenPreview() {
                     ),
                 )
             ),
+            navController = NavController(LocalContext.current),
             onAction = {}
         )
     }

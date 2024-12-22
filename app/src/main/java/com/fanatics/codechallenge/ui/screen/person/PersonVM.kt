@@ -29,13 +29,13 @@ class PersonVM @Inject constructor(
 
     fun handleUIAction(action: UIAction) = when (action) {
         UIAction.ObserveChosenPerson -> observeChosenPerson()
-        UIAction.BackToHome -> TODO()
+        UIAction.BackToHome -> resetChosenPerson()
     }
 
     private fun observeChosenPerson() {
         peopleRepository.chosenPersonFlow.onEach { person ->
             if (person == null) {
-                showFailedUI(resources.getString(R.string.no_people_exception))
+                showFailedUI(resources.getString(R.string.no_person_exception))
             } else {
                 showSuccessUI(person)
             }
@@ -52,7 +52,7 @@ class PersonVM @Inject constructor(
         _uiState.update { PersonUIState.Error(message = msg) }
     }
 
-    private fun showLoadingUI() {
-        _uiState.update { PersonUIState.Loading }
+    private fun resetChosenPerson() {
+        peopleRepository.chosePerson(null)
     }
 }

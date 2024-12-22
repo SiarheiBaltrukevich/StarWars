@@ -16,9 +16,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.fanatics.codechallenge.R
 import com.fanatics.codechallenge.ui.screen.home.component.ErrorHomeScreen
 import com.fanatics.codechallenge.ui.screen.home.component.LoadingHomeScreen
@@ -27,7 +29,9 @@ import com.fanatics.codechallenge.ui.theme.SWTheme
 import com.fanatics.codechallenge.ui.theme.StarWarsAppTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navController: NavController
+) {
     val viewModel: HomeVM = hiltViewModel()
     val state: HomeUIState by viewModel.uiState.collectAsState(HomeUIState.Loading)
 
@@ -35,12 +39,17 @@ fun HomeScreen() {
         viewModel.handleUIAction(UIAction.ObservePeople)
     }
 
-    BaseHomeComponent(state, viewModel::handleUIAction)
+    BaseHomeComponent(
+        state = state,
+        navController = navController,
+        onAction = viewModel::handleUIAction
+    )
 }
 
 @Composable
 private fun BaseHomeComponent(
     state: HomeUIState,
+    navController: NavController,
     onAction: (UIAction) -> Unit
 ) {
     Column(
@@ -52,8 +61,15 @@ private fun BaseHomeComponent(
 
         when(state) {
             HomeUIState.Loading -> LoadingHomeScreen()
-            is HomeUIState.Error -> ErrorHomeScreen(state = state, onAction = onAction)
-            is HomeUIState.Success -> SuccessHomeScreen(state = state, onAction = onAction)
+            is HomeUIState.Error -> ErrorHomeScreen(
+                state = state,
+                onAction = onAction
+            )
+            is HomeUIState.Success -> SuccessHomeScreen(
+                state = state,
+                navController = navController,
+                onAction = onAction
+            )
         }
     }
 }
@@ -92,6 +108,7 @@ private fun BaseHomeComponentPreview() {
     StarWarsAppTheme {
         BaseHomeComponent(
             state = HomeUIState.Loading,
+            navController = NavController(LocalContext.current),
             onAction = {}
         )
     }
