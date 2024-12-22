@@ -29,8 +29,12 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun resetLoadingTimeOut() {
         safeViewModelScope.launch {
-            delay(3000)
+            delay(LOADING_ERROR_DELAY_MILLIS)
             _errorTimeOutFlow.emit(true)
         }
+    }
+
+    companion object {
+        private const val LOADING_ERROR_DELAY_MILLIS = 3000L
     }
 }

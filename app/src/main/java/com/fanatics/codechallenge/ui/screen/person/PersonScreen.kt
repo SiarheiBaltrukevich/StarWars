@@ -42,7 +42,7 @@ fun PersonScreen(
     val state: PersonUIState by viewModel.uiState.collectAsState(PersonUIState.Loading)
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.handleUIAction(UIAction.ObserveChosenPerson)
+        viewModel.handleUIAction(UIAction.ObservePerson)
     }
 
     BasePersonComponent(

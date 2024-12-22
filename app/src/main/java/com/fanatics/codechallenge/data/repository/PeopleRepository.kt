@@ -9,11 +9,7 @@ import com.fanatics.codechallenge.util.DispatcherProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -29,7 +25,7 @@ class PeopleRepository @Inject constructor(
         Log.e(this::class.simpleName, "Error related to the repository.", throwable)
     }
 
-    val chosenPersonFlow: Flow<Person?>
+    val personFlow: Flow<Person?>
         get() = remotePersonDataSource.dataFlow
 
     val peopleFlow: Flow<List<Person>>

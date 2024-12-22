@@ -28,14 +28,14 @@ class PersonVM @Inject constructor(
     val uiState: Flow<PersonUIState> get() = _uiState.asStateFlow()
 
     fun handleUIAction(action: UIAction) = when (action) {
-        UIAction.ObserveChosenPerson -> observeChosenPerson()
+        UIAction.ObservePerson -> observeChosenPerson()
         UIAction.BackToHome -> resetChosenPerson()
     }
 
-    private var observePerson: Job? = null
+    private var observePersonJob: Job? = null
     private fun observeChosenPerson() {
-        observePerson = combine(
-            peopleRepository.chosenPersonFlow,
+        observePersonJob = combine(
+            peopleRepository.personFlow,
             errorAppearanceTimeOutFlow,
         ) { person, isTimeOut ->
             when {
@@ -62,7 +62,7 @@ class PersonVM @Inject constructor(
     }
 
     private fun resetChosenPerson() {
-        observePerson?.cancel()
+        observePersonJob?.cancel()
         peopleRepository.clearPerson()
     }
 }

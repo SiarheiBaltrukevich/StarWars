@@ -8,6 +8,8 @@ import com.fanatics.codechallenge.data.datasource.person.MockedRemotePersonDataS
 import com.fanatics.codechallenge.data.datasource.person.RemotePersonDataSource
 import com.fanatics.codechallenge.di.annotation.Apollo
 import com.fanatics.codechallenge.di.annotation.MockedData
+import com.fanatics.codechallenge.util.DispatcherProvider
+import com.fanatics.codechallenge.util.DispatcherProviderImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,6 +18,11 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DIBindersModule {
+
+    @Binds
+    internal abstract fun bindDispatcherProvider(
+        provider: DispatcherProviderImpl
+    ) : DispatcherProvider
 
     @Binds
     @Apollo
