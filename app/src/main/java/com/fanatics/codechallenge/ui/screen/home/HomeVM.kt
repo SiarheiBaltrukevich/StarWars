@@ -1,18 +1,17 @@
 package com.fanatics.codechallenge.ui.screen.home
 
 import android.content.res.Resources
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.fanatics.codechallenge.R
 import com.fanatics.codechallenge.data.model.Person
 import com.fanatics.codechallenge.data.repository.PeopleRepository
+import com.fanatics.codechallenge.ui.screen.BaseViewModel
 import com.fanatics.codechallenge.util.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.plus
 import javax.inject.Inject
@@ -22,7 +21,7 @@ class HomeVM @Inject constructor(
     private val peopleRepository: PeopleRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val resources: Resources
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<HomeUIState> = MutableStateFlow(HomeUIState.Loading)
     val uiState: Flow<HomeUIState> get() = _uiState.asStateFlow()
@@ -34,13 +33,19 @@ class HomeVM @Inject constructor(
     }
 
     private fun observePeopleRepository() {
-        peopleRepository.peopleFlow.onEach { people ->
-            if (people.isEmpty()) {
-                showFailedUI(resources.getString(R.string.no_people_exception))
-            } else {
-                showSuccessUI(people)
+        combine(
+            peopleRepository.peopleFlow,
+            errorAppearanceTimeOutFlow,
+        ) { people, isTimeOut ->
+            when {
+                people.isEmpty() && isTimeOut ->
+                    showFailedUI(resources.getString(R.string.no_people_exception))
+                people.isEmpty() ->
+                    showLoadingUI()
+                else ->
+                    showSuccessUI(people)
             }
-        }.launchIn(viewModelScope + dispatcherProvider.default)
+        }.launchIn(safeViewModelScope + dispatcherProvider.default)
     }
 
     private fun showSuccessUI(people: List<Person>) {
@@ -61,6 +66,7 @@ class HomeVM @Inject constructor(
 
     private fun refreshPeople() {
         showLoadingUI()
+        resetLoadingTimeOut()
         peopleRepository.refreshPeople()
     }
 }

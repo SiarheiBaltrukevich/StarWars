@@ -44,9 +44,7 @@ class PeopleRepository @Inject constructor(
     }
 
     fun clearPerson() {
-        coroutineScope.launch(dispatcherProvider.io + exceptionHandler) {
-            remotePersonDataSource.clear()
-        }
+        remotePersonDataSource.clear()
     }
 
     fun refreshPeople() {

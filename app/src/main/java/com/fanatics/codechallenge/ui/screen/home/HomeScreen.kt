@@ -57,7 +57,6 @@ private fun BaseHomeComponent(
         modifier = Modifier
             .fillMaxSize()
             .background(SWTheme.colors.common.gradientBackground)
-            .navigationBarsPadding()
     ) {
         Header(modifier = Modifier.statusBarsPadding())
 
