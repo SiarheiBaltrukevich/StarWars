@@ -1,8 +1,11 @@
 package com.fanatics.codechallenge.di
 
-import com.fanatics.codechallenge.data.datasource.people.remote.ApolloRemotePeopleDataSource
-import com.fanatics.codechallenge.data.datasource.people.remote.MockRemotePeopleDataSource
-import com.fanatics.codechallenge.data.datasource.people.remote.RemotePeopleDataSource
+import com.fanatics.codechallenge.data.datasource.people.ApolloRemotePeopleDataSource
+import com.fanatics.codechallenge.data.datasource.people.MockedRemotePeopleDataSource
+import com.fanatics.codechallenge.data.datasource.people.RemotePeopleDataSource
+import com.fanatics.codechallenge.data.datasource.person.ApolloRemotePersonDataSource
+import com.fanatics.codechallenge.data.datasource.person.MockedRemotePersonDataSource
+import com.fanatics.codechallenge.data.datasource.person.RemotePersonDataSource
 import com.fanatics.codechallenge.di.annotation.Apollo
 import com.fanatics.codechallenge.di.annotation.MockedData
 import dagger.Binds
@@ -23,6 +26,18 @@ abstract class DIBindersModule {
     @Binds
     @MockedData
     internal abstract fun bindMockRemotePeopleDataSource(
-        source: MockRemotePeopleDataSource
+        source: MockedRemotePeopleDataSource
     ) : RemotePeopleDataSource
+
+    @Binds
+    @Apollo
+    internal abstract fun bindApolloRemotePersonDataSource(
+        source: ApolloRemotePersonDataSource
+    ) : RemotePersonDataSource
+
+    @Binds
+    @MockedData
+    internal abstract fun bindMockRemotePersonDataSource(
+        source: MockedRemotePersonDataSource
+    ) : RemotePersonDataSource
 }

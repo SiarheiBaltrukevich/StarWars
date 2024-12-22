@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -95,6 +96,7 @@ private fun DetailsDialog(
                 color = SWTheme.colors.person.dialogBackground,
             )
             .padding(SWTheme.dimens.padding.p24)
+            .navigationBarsPadding()
     ) {
         Text(
             style = SWTheme.typography.person.dialog.header,

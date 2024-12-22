@@ -1,4 +1,4 @@
-package com.fanatics.codechallenge.data.datasource.people.remote
+package com.fanatics.codechallenge.data.datasource.people
 
 import com.apollographql.apollo.ApolloClient
 import com.fanatics.codechallenge.data.model.Person
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 /**
- * Resource to work with Apollo schema by GraphQL
+ * Works with graphQL API, provides a people data.
  */
 @Apollo
 internal class ApolloRemotePeopleDataSource @Inject constructor(
@@ -19,12 +19,9 @@ internal class ApolloRemotePeopleDataSource @Inject constructor(
     private val _dataFlow: MutableStateFlow<List<Person>> = MutableStateFlow(emptyList())
     override val dataFlow: Flow<List<Person>> get() = _dataFlow.asStateFlow()
 
-    override fun refresh() {
+    override suspend fun refresh() {
         _dataFlow.update {
-            it // schema is not working now.
-            //apolloClient.query<List<Person>>().execute().data.orEmpty()
+            it // the schema is not working now. Do nothing.
         }
     }
-
-    // the mapper should be added here to convert response to domain model.
 }

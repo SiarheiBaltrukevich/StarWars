@@ -64,8 +64,9 @@ private fun BasePersonComponent(
             .background(SWTheme.colors.common.gradientBackground)
     ) {
         Header(
+            modifier = Modifier.systemBarsPadding(),
             navController = navController,
-            modifier = Modifier.systemBarsPadding()
+            onAction = onAction,
         )
 
         when(state) {
@@ -85,8 +86,11 @@ private fun BasePersonComponent(
 @Composable
 private fun Header(
     navController: NavController,
+    onAction: (UIAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val onBackAction = remember { { onAction(UIAction.BackToHome) } }
+
     Row(
         modifier = modifier
             .height(SWTheme.dimens.person.header.height)
@@ -95,7 +99,10 @@ private fun Header(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                onClick = { navController.navigateUp() }
+                onClick = {
+                    onBackAction()
+                    navController.navigateUp()
+                }
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(SWTheme.dimens.padding.p16)

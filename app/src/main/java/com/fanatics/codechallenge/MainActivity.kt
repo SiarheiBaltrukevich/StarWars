@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
             StarWarsAppTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
+                ) {
                     AppNavigator()
                 }
             }

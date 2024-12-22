@@ -53,6 +53,6 @@ class PersonVM @Inject constructor(
     }
 
     private fun resetChosenPerson() {
-        peopleRepository.chosePerson(null)
+        peopleRepository.clearPerson()
     }
 }

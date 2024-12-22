@@ -1,4 +1,4 @@
-package com.fanatics.codechallenge.data.datasource.people.remote
+package com.fanatics.codechallenge.data.datasource.people
 
 import com.fanatics.codechallenge.data.model.Person
 import kotlinx.coroutines.flow.Flow
@@ -10,5 +10,5 @@ interface RemotePeopleDataSource {
 
     val dataFlow: Flow<List<Person>>
 
-    fun refresh()
+    suspend fun refresh()
 }
