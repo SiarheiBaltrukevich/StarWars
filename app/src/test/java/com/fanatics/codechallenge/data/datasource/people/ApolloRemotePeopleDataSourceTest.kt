@@ -1,8 +1,15 @@
 package com.fanatics.codechallenge.data.datasource.people
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.coroutines.await
+import com.fanatics.codeChanllenge.PeopleQuery
+import com.fanatics.codechallenge.data.model.Person
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -20,6 +27,17 @@ class ApolloRemotePeopleDataSourceTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
+        mockkStatic("com.apollographql.apollo.coroutines.CoroutinesExtensionsKt")
+
+        every { apolloClient.query(any<PeopleQuery>()) } returns mockk {
+            coEvery { this@mockk.await() } returns mockk {
+                every { this@mockk.data } returns mockk {
+                    every { this@mockk.characters() } returns mockk {
+                        every { this@mockk.results() } returns listOf(personResponse)
+                    }
+                }
+            }
+        }
 
         objectUnderTest = ApolloRemotePeopleDataSource(
             apolloClient = apolloClient
@@ -41,15 +59,29 @@ class ApolloRemotePeopleDataSourceTest {
         )
     }
 
-    @Test // API is not prepared. not working schema
+    @Test
     fun `refresh - ask API for people collection`() = runTest {
-//        val expected = listOf<Person>(mockk())
-//        coEvery { apolloClient.query(....) } returns expected
-//
-//        objectUnderTest.refresh()
-//
-//        val result = objectUnderTest.dataFlow.first()
-//
-//        Assert.assertEquals(expected, result.isEmpty())
+        val expected = Person(
+            id = 1L,
+            name = "Rick Sanchez",
+            status = "Alive",
+            species = "Human",
+            gender = "Male"
+        )
+
+        objectUnderTest.refresh()
+
+        val result = objectUnderTest.dataFlow.first()
+
+        Assert.assertEquals(expected, result.first())
     }
+
+    private val personResponse = PeopleQuery.Result(
+        "Character",
+        "1",
+        "Rick Sanchez",
+        "Alive",
+        "Human",
+        "Male"
+    )
 }

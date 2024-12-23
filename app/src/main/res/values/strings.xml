@@ -5,17 +5,17 @@
     <string name="home_header">People</string>
     <string name="home_loading">Loading...</string>
     <string name="no_people_exception">There is no people to show.\nTry to refresh.</string>
-    <string name="person_item_height">Height: %1$s</string>
-    <string name="person_item_mass">Mass: %1$s</string>
+    <string name="person_item_height">Gender: %1$s</string>
+    <string name="person_item_mass">Status: %1$s</string>
 
     <!-- Person screen -->
     <string name="person_header">People</string>
     <string name="person_loading">Loading details...</string>
     <string name="no_person_exception">Can\'t find the person.</string>
-    <string name="person_homeworld">Homeworld: %1$s</string>
+    <string name="person_homeworld">Species: %1$s</string>
     <string name="person_text_with_link_1">Click&#160;</string>
     <string name="person_text_with_link_2">here</string>
-    <string name="person_text_with_link_3">&#160;to view homeworld data for %1$s</string>
+    <string name="person_text_with_link_3">&#160;to view species data for %1$s</string>
 
     <!-- Buttons -->
     <string name="button_refresh">Refresh</string>

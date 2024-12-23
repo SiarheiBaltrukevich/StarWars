@@ -32,7 +32,7 @@ object DIProvidersModule {
 
     @Provides
     @Singleton
-    fun providesApolloClient(): ApolloClient = ApolloClient.Builder()
+    fun providesApolloClient(): ApolloClient = ApolloClient.builder()
         .serverUrl(APOLLO_SERVER_URL)
         .build()
 

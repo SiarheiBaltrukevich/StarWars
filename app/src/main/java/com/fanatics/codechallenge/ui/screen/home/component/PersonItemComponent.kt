@@ -37,8 +37,8 @@ internal fun PersonItemComponent(
             modifier = Modifier.weight(1f)
         ) {
             InfoText(text = person.name)
-            InfoText(text = stringResource(R.string.person_item_height, person.height.toString()))
-            InfoText(text = stringResource(R.string.person_item_mass, person.mass.toString()))
+            InfoText(text = stringResource(R.string.person_item_height, person.gender.toString()))
+            InfoText(text = stringResource(R.string.person_item_mass, person.status.toString()))
         }
         Icon(
             modifier = Modifier.size(SWTheme.dimens.icon.small),
@@ -74,9 +74,9 @@ private fun PersonItemComponentPreview() {
                 Person(
                     id = 4,
                     name = "Niall Smyth",
-                    height = 1.75,
-                    mass = 76.5,
-                    homeworld = "homeworld 1"
+                    gender = "Male",
+                    status = "Alive",
+                    species = "Human"
                 ),
             )
         }

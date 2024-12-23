@@ -1,6 +1,6 @@
 [versions]
 agp = "8.6.1"
-apollo = "4.1.0"
+apollo = "2.5.13"
 ksp = "1.9.25-1.0.20"
 kotlin = "1.9.25"
 coroutines = "1.8.1"
@@ -21,6 +21,7 @@ mockk = "1.13.9"
 
 [libraries]
 apollo = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "apollo"}
+apollo-coroutines = { group = "com.apollographql.apollo", name = "apollo-coroutines-support", version.ref = "apollo"}
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

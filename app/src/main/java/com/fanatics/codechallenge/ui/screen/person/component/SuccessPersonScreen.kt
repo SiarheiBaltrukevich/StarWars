@@ -104,7 +104,7 @@ private fun DetailsDialog(
         )
         Text(
             style = SWTheme.typography.person.dialog.info,
-            text = stringResource(R.string.person_homeworld, person.homeworld),
+            text = stringResource(R.string.person_homeworld, person.species),
         )
     }
 }
@@ -123,9 +123,9 @@ private fun SuccessPersonScreenPreview() {
                     person = Person(
                         id = 4,
                         name = "Niall Fastfood",
-                        height = 1.75,
-                        mass = 76.5,
-                        homeworld = "burger bar"
+                        gender = "male",
+                        status = "Alive",
+                        species = "Human"
                     ),
                 )
             )

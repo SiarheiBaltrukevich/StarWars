@@ -1,0 +1,9 @@
+query Person($characterId: ID!) {
+  character(id: $characterId) {
+    id
+    name
+    status
+    species
+    gender
+  }
+}

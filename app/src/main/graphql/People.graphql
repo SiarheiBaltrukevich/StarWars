@@ -1,0 +1,11 @@
+query People {
+  characters {
+    results {
+      id
+      name
+      status
+      species
+      gender
+    }
+  }
+}

@@ -7,6 +7,6 @@ import dagger.hilt.android.HiltAndroidApp
 class StarWarsApp : Application() {
 
     companion object {
-        const val APOLLO_SERVER_URL = "https://apollo-fullstack-tutorial.herokuapp.com/graphql"
+        const val APOLLO_SERVER_URL = "https://rickandmortyapi.com/graphql"
     }
 }

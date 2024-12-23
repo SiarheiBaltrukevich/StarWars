@@ -4,6 +4,7 @@ import android.util.Log
 import com.fanatics.codechallenge.data.datasource.people.RemotePeopleDataSource
 import com.fanatics.codechallenge.data.datasource.person.RemotePersonDataSource
 import com.fanatics.codechallenge.data.model.Person
+import com.fanatics.codechallenge.di.annotation.Apollo
 import com.fanatics.codechallenge.di.annotation.MockedData
 import com.fanatics.codechallenge.util.DispatcherProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -16,8 +17,8 @@ import javax.inject.Singleton
 
 @Singleton
 class PeopleRepository @Inject constructor(
-    @MockedData private val remotePeopleDataSource: RemotePeopleDataSource,
-    @MockedData private val remotePersonDataSource: RemotePersonDataSource,
+    @Apollo private val remotePeopleDataSource: RemotePeopleDataSource,
+    @Apollo private val remotePersonDataSource: RemotePersonDataSource,
     private val dispatcherProvider: DispatcherProvider,
     private val coroutineScope: CoroutineScope,
 ) {

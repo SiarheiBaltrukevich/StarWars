@@ -85,16 +85,16 @@ private fun SuccessHomeScreenPreview() {
                     Person(
                         id = 4,
                         name = "Niall",
-                        height = 1.75,
-                        mass = 76.5,
-                        homeworld = "homeworld 1"
+                        gender = "Male",
+                        status = "Alive",
+                        species = "Human"
                     ),
                     Person(
                         id = 3,
                         name = "Jack",
-                        height = 1.65,
-                        mass = 76.5,
-                        homeworld = "homeworld 2"
+                        gender = "Male",
+                        status = "Alive",
+                        species = "Human"
                     ),
                 )
             ),

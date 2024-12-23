@@ -54,7 +54,7 @@ android {
         service("service") {
             packageName.set("com.fanatics.codeChanllenge")
             introspection {
-                endpointUrl.set("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
+                endpointUrl.set("https://rickandmortyapi.com/graphql")
                 schemaFile.set(file("src/main/graphql/schema.graphqls"))
             }
         }
@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.apollo)
+    implementation(libs.apollo.coroutines)
 
     ksp(libs.hilt.di.android.compiler)
     implementation(libs.hilt.di.android)

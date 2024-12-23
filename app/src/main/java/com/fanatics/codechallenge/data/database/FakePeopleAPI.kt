@@ -37,21 +37,21 @@ class FakePeopleAPI @Inject constructor() {
     private val names = listOf("Niall", "Jack", "Tom", "Donald", "Kate")
     private val secondNames = listOf("Crow", "Fox", "Smyth", "Hunter", "Fisher")
     private val homeWorlds = listOf("Rain Forest", "Green Fields", "Sand Desert", "River Side")
+    private val species = listOf("Human", "Alien", "Android")
+    private val genders = listOf("Male", "Female", "NoGender")
     private val db = generateBase()
 
     private fun generateBase(): List<Person> {
         val db = mutableListOf<Person>()
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
 
         for (i in 0..15) {
             db.add(
                 Person(
                     id = i.toLong(),
                     name = "${names.random()} ${secondNames.random()}",
-                    height = df.format(Random.nextDouble(1.5, 2.0)).toDouble(),
-                    mass = df.format(Random.nextDouble(50.0, 100.0)).toDouble(),
-                    homeworld = homeWorlds.random(),
+                    gender = genders.random(),
+                    status = species.random(),
+                    species = homeWorlds.random(),
                 )
             )
         }
