@@ -56,12 +56,11 @@ fun PersonScreen(
 private fun BasePersonComponent(
     state: PersonUIState,
     navController: NavController,
-    onAction: (UIAction) -> Unit
+    onAction: (UIAction) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(SWTheme.colors.common.gradientBackground)
+        modifier = modifier.fillMaxSize()
     ) {
         Header(
             modifier = Modifier.systemBarsPadding(),
@@ -126,6 +125,7 @@ private fun Header(
 private fun BaseHomeComponentPreview() {
     StarWarsAppTheme {
         BasePersonComponent(
+            modifier = Modifier.background(SWTheme.colors.common.gradientBackground),
             state = PersonUIState.Loading,
             navController = NavController(LocalContext.current),
             onAction = {}

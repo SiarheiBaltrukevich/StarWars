@@ -51,12 +51,11 @@ fun HomeScreen(
 private fun BaseHomeComponent(
     state: HomeUIState,
     navController: NavController,
-    onAction: (UIAction) -> Unit
+    onAction: (UIAction) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(SWTheme.colors.common.gradientBackground)
+        modifier = modifier.fillMaxSize()
     ) {
         Header(modifier = Modifier.statusBarsPadding())
 
@@ -108,6 +107,7 @@ private fun Header(
 private fun BaseHomeComponentPreview() {
     StarWarsAppTheme {
         BaseHomeComponent(
+            modifier = Modifier.background(SWTheme.colors.common.gradientBackground),
             state = HomeUIState.Loading,
             navController = NavController(LocalContext.current),
             onAction = {}

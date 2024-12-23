@@ -31,7 +31,7 @@ class FakePeopleAPI @Inject constructor() {
     }
 
     // to demonstrate onLoading work
-    private val delays = listOf(500L, 1000L, 2000L)
+    private val delays = listOf(100L, 500L, 750L)
 
     // to generate list of person
     private val names = listOf("Niall", "Jack", "Tom", "Donald", "Kate")
