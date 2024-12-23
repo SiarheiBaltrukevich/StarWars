@@ -1,17 +1,17 @@
 package com.fanatics.codechallenge.ui.screen.home
 
-import android.content.res.Resources
-import com.fanatics.codechallenge.R
 import com.fanatics.codechallenge.data.model.Person
 import com.fanatics.codechallenge.data.repository.PeopleRepository
 import com.fanatics.codechallenge.ui.screen.BaseViewModel
 import com.fanatics.codechallenge.util.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.plus
 import javax.inject.Inject
@@ -20,7 +20,6 @@ import javax.inject.Inject
 class HomeVM @Inject constructor(
     private val peopleRepository: PeopleRepository,
     private val dispatcherProvider: DispatcherProvider,
-    private val resources: Resources
 ) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<HomeUIState> = MutableStateFlow(HomeUIState.Loading)
@@ -32,20 +31,15 @@ class HomeVM @Inject constructor(
         is UIAction.ChosePerson -> chosePerson(action.id)
     }
 
+    private var observePeopleJob: Job? = null
     private fun observePeopleRepository() {
-        combine(
-            peopleRepository.peopleFlow,
-            errorAppearanceTimeOutFlow,
-        ) { people, isTimeOut ->
-            when {
-                people.isEmpty() && isTimeOut ->
-                    showFailedUI(resources.getString(R.string.no_people_exception))
-                people.isEmpty() ->
-                    showLoadingUI()
-                else ->
-                    showSuccessUI(people)
-            }
-        }.launchIn(safeViewModelScope + dispatcherProvider.default)
+        observePeopleJob?.cancel()
+        observePeopleJob = peopleRepository.peopleFlow
+            .catch { throwable ->
+                showFailedUI(msg = throwable.localizedMessage.orEmpty())
+            }.onEach { people ->
+                if (people.isEmpty()) showLoadingUI() else showSuccessUI(people)
+            }.launchIn(safeViewModelScope + dispatcherProvider.default)
     }
 
     private fun showSuccessUI(people: List<Person>) {
@@ -66,7 +60,7 @@ class HomeVM @Inject constructor(
 
     private fun refreshPeople() {
         showLoadingUI()
-        resetLoadingTimeOut()
+        observePeopleRepository()
         peopleRepository.refreshPeople()
     }
 }

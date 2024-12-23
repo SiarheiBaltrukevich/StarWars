@@ -1,7 +1,5 @@
 package com.fanatics.codechallenge.ui.screen.person
 
-import android.content.res.Resources
-import com.fanatics.codechallenge.R
 import com.fanatics.codechallenge.data.model.Person
 import com.fanatics.codechallenge.data.repository.PeopleRepository
 import com.fanatics.codechallenge.ui.screen.BaseViewModel
@@ -11,15 +9,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonVM @Inject constructor(
-    private val resources: Resources,
     private val peopleRepository: PeopleRepository,
     private val dispatcherProvider: DispatcherProvider,
 ) : BaseViewModel() {
@@ -34,19 +32,12 @@ class PersonVM @Inject constructor(
 
     private var observePersonJob: Job? = null
     private fun observeChosenPerson() {
-        observePersonJob = combine(
-            peopleRepository.personFlow,
-            errorAppearanceTimeOutFlow,
-        ) { person, isTimeOut ->
-            when {
-                person == null && isTimeOut ->
-                    showFailedUI(resources.getString(R.string.no_person_exception))
-                person == null ->
-                    showLoadingUI()
-                else ->
-                    showSuccessUI(person)
-            }
-        }.launchIn(safeViewModelScope + dispatcherProvider.default)
+        observePersonJob = peopleRepository.personFlow
+            .catch { throwable ->
+                showFailedUI(msg = throwable.localizedMessage.orEmpty())
+            }.onEach { person ->
+                if (person == null) showLoadingUI() else showSuccessUI(person)
+            }.launchIn(safeViewModelScope + dispatcherProvider.default)
     }
 
     private fun showSuccessUI(person: Person) {

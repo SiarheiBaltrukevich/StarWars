@@ -1,6 +1,5 @@
 package com.fanatics.codechallenge.ui.screen.person
 
-import android.content.res.Resources
 import com.fanatics.codechallenge.data.model.Person
 import com.fanatics.codechallenge.data.repository.PeopleRepository
 import com.fanatics.codechallenge.utils.TestCoroutineRule
@@ -12,10 +11,10 @@ import io.mockk.unmockkAll
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Assert
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -27,8 +26,6 @@ class PersonVMTest {
 
     @MockK
     lateinit var peopleRepository: PeopleRepository
-    @MockK
-    lateinit var resources: Resources
 
     private val personFlow: MutableStateFlow<Person?> = MutableStateFlow(null)
 
@@ -38,13 +35,11 @@ class PersonVMTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        every { resources.getString(any()) } answers { args[0].toString() }
         every { peopleRepository.personFlow } returns personFlow
 
         objectUnderTest = PersonVM(
             peopleRepository = peopleRepository,
             dispatcherProvider = coroutineRule.dispatchersProvider,
-            resources = resources,
         )
     }
 
@@ -62,7 +57,7 @@ class PersonVMTest {
     }
 
     @Test
-    fun `handle action - ObservePerson - null, not timed out - emit Loading`() = runTest {
+    fun `handle action - ObservePerson - null - emit Loading`() = runTest {
         val expected = PersonUIState.Loading
 
         objectUnderTest.handleUIAction(UIAction.ObservePerson)
@@ -73,11 +68,26 @@ class PersonVMTest {
     }
 
     @Test
-    fun `handle action - ObservePerson - not null, not timed out - emit Success`() = runTest {
+    fun `handle action - ObservePerson - not null - emit Success`() = runTest {
         val person = mockk<Person>()
         val expected = PersonUIState.Success(person)
 
         personFlow.value = person
+
+        objectUnderTest.handleUIAction(UIAction.ObservePerson)
+
+        val actual = objectUnderTest.uiState.first()
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `handle action - ObservePerson - error - emit Error`() = runTest {
+        val expectedMessage = "Test error"
+        val error = Throwable(expectedMessage)
+        val expected = PersonUIState.Error(error.localizedMessage.orEmpty())
+
+        every { peopleRepository.personFlow } returns flow { throw error }
 
         objectUnderTest.handleUIAction(UIAction.ObservePerson)
 

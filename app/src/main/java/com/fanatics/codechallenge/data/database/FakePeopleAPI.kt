@@ -8,19 +8,32 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.random.Random
 
+/**
+ * That class was created in terms of providing the db, since the GraphQL schema is not working.
+ */
 @Singleton
 class FakePeopleAPI @Inject constructor() {
 
+    /**
+     * Emulates a network work, uses some [delays]
+     */
     suspend fun requestPeople(): List<Person> {
-        delay(1000)
+        delay(delays.random())
         return db
     }
 
+    /**
+     * Emulates a network work, uses some [delays]
+     */
     suspend fun requestPerson(id: Long): Person? {
-        delay(1000)
+        delay(delays.random())
         return db.firstOrNull { it.id == id }
     }
 
+    // to demonstrate onLoading work
+    private val delays = listOf(500L, 1000L, 2000L)
+
+    // to generate list of person
     private val names = listOf("Niall", "Jack", "Tom", "Donald", "Kate")
     private val secondNames = listOf("Crow", "Fox", "Smyth", "Hunter", "Fisher")
     private val homeWorlds = listOf("Rain Forest", "Green Fields", "Sand Desert", "River Side")

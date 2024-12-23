@@ -5,11 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 abstract class BaseViewModel : ViewModel() {
@@ -19,22 +14,4 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     protected val safeViewModelScope: CoroutineScope = viewModelScope + errorHandler
-
-    private val _errorTimeOutFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    protected val errorAppearanceTimeOutFlow: Flow<Boolean>
-        get() = run {
-            resetLoadingTimeOut()
-            return@run _errorTimeOutFlow.asStateFlow()
-        }
-
-    protected fun resetLoadingTimeOut() {
-        safeViewModelScope.launch {
-            delay(LOADING_ERROR_DELAY_MILLIS)
-            _errorTimeOutFlow.emit(true)
-        }
-    }
-
-    companion object {
-        private const val LOADING_ERROR_DELAY_MILLIS = 3000L
-    }
 }

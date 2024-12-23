@@ -1,6 +1,5 @@
 package com.fanatics.codechallenge.ui.screen.home
 
-import android.content.res.Resources
 import com.fanatics.codechallenge.data.model.Person
 import com.fanatics.codechallenge.data.repository.PeopleRepository
 import com.fanatics.codechallenge.utils.TestCoroutineRule
@@ -12,9 +11,10 @@ import io.mockk.unmockkAll
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -27,8 +27,6 @@ class HomeVMTest {
 
     @MockK
     lateinit var peopleRepository: PeopleRepository
-    @MockK
-    lateinit var resources: Resources
 
     private val peopleFlow: MutableStateFlow<List<Person>> = MutableStateFlow(emptyList())
 
@@ -38,13 +36,11 @@ class HomeVMTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        every { resources.getString(any()) } answers { args[0].toString() }
         every { peopleRepository.peopleFlow } returns peopleFlow
 
         objectUnderTest = HomeVM(
             peopleRepository = peopleRepository,
             dispatcherProvider = coroutineRule.dispatchersProvider,
-            resources = resources,
         )
     }
 
@@ -58,22 +54,22 @@ class HomeVMTest {
         val expected = HomeUIState.Loading
         val actual = objectUnderTest.uiState.first()
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `handle action - ObservePeople - empty list, not timed out - emit Loading`() = runTest {
+    fun `handle action - ObservePeople - empty list - emit Loading`() = runTest {
         val expected = HomeUIState.Loading
 
         objectUnderTest.handleUIAction(UIAction.ObservePeople)
 
         val actual = objectUnderTest.uiState.first()
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `handle action - ObservePeople - not empty list, not timed out - emit Success`() = runTest {
+    fun `handle action - ObservePeople - not empty list - emit Success`() = runTest {
         val person = mockk<Person>()
         val expected = HomeUIState.Success(listOf(person))
 
@@ -83,7 +79,22 @@ class HomeVMTest {
 
         val actual = objectUnderTest.uiState.first()
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `handle action - ObservePeople - error - emit Error`() = runTest {
+        val expectedMessage = "Test error"
+        val error = Throwable(expectedMessage)
+        val expected = HomeUIState.Error(error.localizedMessage.orEmpty())
+
+        every { peopleRepository.peopleFlow } returns flow { throw error }
+
+        objectUnderTest.handleUIAction(UIAction.ObservePeople)
+
+        val actual = objectUnderTest.uiState.first()
+
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -98,7 +109,7 @@ class HomeVMTest {
 
         verify { peopleRepository.refreshPeople() }
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
